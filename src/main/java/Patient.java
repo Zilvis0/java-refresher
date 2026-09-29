@@ -44,6 +44,13 @@ public class Patient {
         return pricePerSession * numberOfSessions;
     }
 
-    public Patient(){
+    public Patient(String name, int age, int numberOfSessions,
+                   double pricePerSession, boolean isActive, int painLevel) {
+        this.name = name;
+        this.age = age;
+        this.numberOfSessions = numberOfSessions;
+        this.pricePerSession = pricePerSession;
+        this.isActive = isActive;
+        this.painLevel = painLevel;
     }
 }
