@@ -6,6 +6,18 @@ public class Patient {
     private boolean isActive;
     private int painLevel;
 
+    public boolean hasHighPriority(){
+        return isActive && painLevel >= 7;
+    }
+
+    public void updatePainLevel(int newPainLevel){
+        if (newPainLevel < 0 || newPainLevel > 10){
+            throw new IllegalArgumentException("Pain level must be between 0 and 10");
+        } else {
+        painLevel = newPainLevel;
+        }
+    }
+
     public String getName(){
         return name;
     }
@@ -29,15 +41,13 @@ public class Patient {
         return painLevel;
     }
 
-    String getPainDescription(){
-        if (painLevel < 0 || painLevel > 10) {
-            return "Invalid pain level";
-        } else if (painLevel <=3){
-            return "Low pain";
+    PainLevel getPainCategory(){
+        if (painLevel <=3){
+            return PainLevel.LOW;
         } else if (painLevel <=6){
-            return "Moderate pain";
+            return PainLevel.MODERATE;
         } else {
-            return "High pain";
+            return PainLevel.HIGH;
         }
     }
     double calculateTotalTreatmentCost(){
@@ -51,6 +61,6 @@ public class Patient {
         this.numberOfSessions = numberOfSessions;
         this.pricePerSession = pricePerSession;
         this.isActive = isActive;
-        this.painLevel = painLevel;
+        updatePainLevel(painLevel);
     }
 }
