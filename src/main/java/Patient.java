@@ -1,4 +1,4 @@
-public class Patient {
+public class Patient implements Billable{
     private String name;
     private int age;
     private int numberOfSessions;
@@ -50,7 +50,8 @@ public class Patient {
             return PainLevel.HIGH;
         }
     }
-    double calculateTotalTreatmentCost(){
+    @Override
+    public double calculateTotalTreatmentCost(){
         return pricePerSession * numberOfSessions;
     }
 

@@ -4,6 +4,9 @@ public class Main {
 
     public static void main(String[] args) {
         double clinicRevenue = 0;
+        int highPriorityPatients = 0;
+        double avgPainLvl;
+        int totalPainLvl = 0;
         ArrayList<Patient> patients = new ArrayList<>();
         patients.add(new Patient("Anna", 42, 9, 55, true, 7));
         patients.add(new Patient("Peter", 31, 4, 60, true, 3));
@@ -19,10 +22,17 @@ public class Main {
         }
 
         for (Patient patient : patients){
+            if (patient.hasHighPriority()){
+                highPriorityPatients++;
+            }
+            totalPainLvl+=patient.getPainLevel();
             clinicRevenue += patient.calculateTotalTreatmentCost();
             System.out.println(patient.getName() + " -> " + patient.getPainCategory() + (patient.hasHighPriority() ? " -> HIGH PRIORITY" : ""));
         }
+        avgPainLvl = (double) totalPainLvl / patients.size();
         System.out.println("Total clinic revenue: " + clinicRevenue + " CHF");
+        System.out.println("High priority patients: " + highPriorityPatients);
+        System.out.println("Average pain level: " + avgPainLvl);
     }
 
 }
