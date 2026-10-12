@@ -1,6 +1,11 @@
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.ValueSource;
+import org.junit.jupiter.params.provider.CsvSource;
 
 public class PatientTest {
 
@@ -52,5 +57,33 @@ public class PatientTest {
         assertEquals(7, patient.getPainLevel());
     }
 
+    @Test
+    void shouldIdentifyHighPriorityPatients(){
+        Patient patient1 =  new Patient("Anna", 7, 1, 50, true, 8);
+        Patient patient2 =  new Patient("Bnna", 7, 1, 50, true, 4);
+        Patient patient3 =  new Patient("Cnna", 7, 1, 50, false, 9);
+        assertTrue(patient1.hasHighPriority());
+        assertFalse(patient2.hasHighPriority());
+        assertFalse(patient3.hasHighPriority());
+    }
 
+    @ParameterizedTest
+    @ValueSource(ints = {0, 3, 6, 7, 10})
+    void shouldAcceptValidPainLevels(int painLevel) {
+        Patient patient = new Patient("Anna", 7, 1, 50, true, painLevel);
+        assertEquals(painLevel, patient.getPainLevel());
+    }
+
+    @ParameterizedTest
+    @CsvSource({
+            "true, 8, true",
+            "true, 4, false",
+            "false, 9, false",
+            "true, 7, true",
+            "true, 6, false"
+    })
+    void shouldDeterminePriority(boolean active, int painLevel, boolean expected) {
+        Patient patient = new Patient("Anna", 7, 1, 50, active, painLevel);
+        assertEquals(expected, patient.hasHighPriority());
+    }
 }
