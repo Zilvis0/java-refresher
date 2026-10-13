@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
 
@@ -8,6 +10,7 @@ public class Main {
         int highPriorityPatients = 0;
         double avgPainLvl;
         int totalPainLvl = 0;
+        int index = 100;
 
         GroupTherapy group = new GroupTherapy("Back Training", 6, 25);
 
@@ -18,6 +21,26 @@ public class Main {
         patients.add(new Patient("Maria", 67, 12, 55, false, 8));
 //        patients.get(1).updatePainLevel(8);
 //        patients.get(1).updatePainLevel(15);
+
+        HashMap<Integer, Patient> patientRegistry = new HashMap<>();
+        for (Patient patient : patients){
+            index++;
+            patientRegistry.put(index, patient);
+        }
+
+        if(patientRegistry.containsKey(102)) {
+            System.out.println(patientRegistry.get(102).getName());
+        }
+        patientRegistry.remove(103);
+        System.out.println(patientRegistry.size());
+        System.out.println(patientRegistry.get(103));
+
+        printPatientName(patientRegistry, 102);
+        printPatientName(patientRegistry, 103);
+
+        for(Map.Entry<Integer, Patient> entry : patientRegistry.entrySet()){
+            System.out.println(entry.getKey() + " - " + entry.getValue().getName() + " - Pain: " + entry.getValue().getPainLevel());
+        }
 
         ArrayList<Billable> billableItems = new ArrayList<>();
 
@@ -50,5 +73,18 @@ public class Main {
         System.out.println("Average pain level: " + avgPainLvl);
         System.out.println("Group therapy revenue: " + group.calculateTotalTreatmentCost() + " CHF");
     }
+
+    public static void printPatientName(
+            HashMap<Integer, Patient> registry,
+            int patientId) {
+            System.out.println((registry.get(patientId) == null ? "Patient not found" : registry.get(patientId).getName()));
+    }
+
+    public static boolean addPatient(
+            HashMap<Integer, Patient> registry, int patientId, Patient patient) {
+
+         return registry.putIfAbsent(patientId, patient) == null;
+    }
+
 
 }
