@@ -12,6 +12,8 @@ public class Main {
         int totalPainLvl = 0;
         int index = 100;
 
+
+
         GroupTherapy group = new GroupTherapy("Back Training", 6, 25);
 
         ArrayList<Patient> patients = new ArrayList<>();
@@ -21,6 +23,8 @@ public class Main {
         patients.add(new Patient("Maria", 67, 12, 55, false, 8));
 //        patients.get(1).updatePainLevel(8);
 //        patients.get(1).updatePainLevel(15);
+
+
 
         HashMap<Integer, Patient> patientRegistry = new HashMap<>();
         for (Patient patient : patients){
@@ -72,6 +76,17 @@ public class Main {
         System.out.println("High priority patients: " + highPriorityPatients);
         System.out.println("Average pain level: " + avgPainLvl);
         System.out.println("Group therapy revenue: " + group.calculateTotalTreatmentCost() + " CHF");
+
+
+
+
+        PatientRegistry patientRegistry1 = new PatientRegistry();
+
+        patientRegistry1.addPatient(101, patientRegistry.get(101));
+        System.out.println(patientRegistry1.getPatient(101).getName());
+
+        System.out.println(patientRegistry1.addPatient(101, patientRegistry.get(102)));
+        System.out.println(patientRegistry1.getPatient(101).getName());
     }
 
     public static void printPatientName(
@@ -85,6 +100,5 @@ public class Main {
 
          return registry.putIfAbsent(patientId, patient) == null;
     }
-
 
 }
